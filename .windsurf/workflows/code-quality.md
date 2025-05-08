@@ -2,119 +2,135 @@
 description: Apply linting (ESLint), formatting (Prettier) and strict typing (TypeScript) to respect code conventions and reduce errors.
 ---
 
-steps:
-  - name: "Installer les dépendances"
-    run: >
-      npm install --save-dev \
-        eslint eslint-config-airbnb eslint-config-airbnb-typescript \
-        @typescript-eslint/parser @typescript-eslint/eslint-plugin \
-        prettier eslint-plugin-prettier eslint-config-prettier \
-        eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react \
-        eslint-plugin-react-hooks
-    cite: :contentReference[oaicite:0]{index=0}
+# Code Quality Workflow
 
-  - name: "Créer le fichier de configuration ESLint"
-    create: |
-      // .eslintrc.cjs
-      module.exports = {
-        parser: '@typescript-eslint/parser',
-        extends: [
-          'airbnb-typescript', 
-          'plugin:react/recommended',
-          'plugin:react-hooks/recommended',
-          'plugin:jsx-a11y/recommended',
-          'prettier'
-        ],
-        parserOptions: {
-          project: './tsconfig.json',
-          ecmaFeatures: { jsx: true }
-        },
-        rules: {
-          'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
-          'import/extensions': ['error', 'ignorePackages', {
-            ts: 'never',
-            tsx: 'never'
-          }]
-        },
-        settings: { react: { version: 'detect' } }
-      };
-    note: "On utilise `eslint-config-prettier` pour désactiver les règles conflictuelles avec Prettier."  
-    cite: :contentReference[oaicite:1]{index=1}
+## Steps
 
-  - name: "Créer la configuration Prettier"
-    create: |
-      // .prettierrc.js
-      module.exports = {
-        singleQuote: true,
-        trailingComma: 'all',
-        printWidth: 80,
-        arrowParens: 'avoid'
-      };
-      // .prettierignore
-      node_modules/
-      build/
-      dist/
-    cite: :contentReference[oaicite:2]{index=2}
+### 1. Install dependencies
+```bash
+npm install --save-dev \
+  eslint eslint-config-airbnb eslint-config-airbnb-typescript \
+  @typescript-eslint/parser @typescript-eslint/eslint-plugin \
+  prettier eslint-plugin-prettier eslint-config-prettier \
+  eslint-plugin-jsx-a11y eslint-plugin-import eslint-plugin-react \
+  eslint-plugin-react-hooks
+```
+> :contentReference[oaicite:0]{index=0}
 
-  - name: "Activer le mode strict de TypeScript"
-    modify: |
-      // tsconfig.json
-      {
-        "compilerOptions": {
-          "strict": true,
-          "noImplicitAny": true,
-          "strictNullChecks": true,
-          "strictFunctionTypes": true,
-          "strictBindCallApply": true,
-          "strictPropertyInitialization": true,
-          "noImplicitThis": true,
-          /* autres options standards… */
-        }
-      }
-    note: "Le flag `strict: true` active l'ensemble des contrôles stricts pour une meilleure sûreté de code."  
-    cite: :contentReference[oaicite:3]{index=3}
+### 2. Create ESLint configuration file
+```javascript
+// .eslintrc.cjs
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'airbnb-typescript', 
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+    'prettier'
+  ],
+  parserOptions: {
+    project: './tsconfig.json',
+    ecmaFeatures: { jsx: true }
+  },
+  rules: {
+    'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
+    'import/extensions': ['error', 'ignorePackages', {
+      ts: 'never',
+      tsx: 'never'
+    }]
+  },
+  settings: { react: { version: 'detect' } }
+};
+```
 
-  - name: "Ajouter les scripts npm"
-    modify: |
-      // package.json
-      "scripts": {
-        "lint": "eslint 'src/**/*.{ts,tsx}'",
-        "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}'",
-        "check": "npm run lint && npm run format -- --check"
-      }
-    note: >
-      Le script `check` permet d’exécuter lint et format en CI pour refuser  
-      tout push contenant des erreurs de style ou de typage.
-    cite: :contentReference[oaicite:4]{index=4}
+**Note:** We use `eslint-config-prettier` to disable rules that conflict with Prettier.
+> :contentReference[oaicite:1]{index=1}
 
-  - name: "Vérifier et corriger les violations"
-    run: |
-      npm run lint -- --fix
-      npm run format
-    note: "Ces commandes appliquent automatiquement les corrections suggérées par ESLint et Prettier."  
-    cite: :contentReference[oaicite:5]{index=5}
+### 3. Create Prettier configuration
+```javascript
+// .prettierrc.js
+module.exports = {
+  singleQuote: true,
+  trailingComma: 'all',
+  printWidth: 80,
+  arrowParens: 'avoid'
+};
+```
 
-  - name: "Vérification des conventions de nommage"
-    manual: |
-      • Composants React : nommer chaque fichier et dossier en PascalCase (ex. `UserCard.tsx`):contentReference[oaicite:6]{index=6}  
-      • Fichiers utilitaires/hooks : nommer en camelCase (ex. `dateFormatter.ts`):contentReference[oaicite:7]{index=7}  
-      • Assurer que les exports par défaut de composants utilisent le même nom que le fichier.
-    cite: :contentReference[oaicite:8]{index=8}
+```
+// .prettierignore
+node_modules/
+build/
+dist/
+```
+> :contentReference[oaicite:2]{index=2}
 
-  - name: "Configurer la CI (ex: GitHub Actions)"
-    create: |
-      # .github/workflows/lint.yml
-      name: Lint & Format
-      on: [push, pull_request]
-      jobs:
-        lint:
-          runs-on: ubuntu-latest
-          steps:
-            - uses: actions/checkout@v3
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with: { 'node-version': '18' }
-            - run: npm ci
-            - run: npm run check
-    note: "Le job CI échoue si ESLint ou Prettier détecte un problème."  
-    cite: :contentReference[oaicite:9]{index=9}
+### 4. Enable TypeScript strict mode
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    /* other standard options... */
+  }
+}
+```
+
+**Note:** The `strict: true` flag enables all strict checks for better code safety.
+> :contentReference[oaicite:3]{index=3}
+
+### 5. Add npm scripts
+```json
+// package.json
+"scripts": {
+  "lint": "eslint 'src/**/*.{ts,tsx}'",
+  "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,md}'",
+  "check": "npm run lint && npm run format -- --check"
+}
+```
+
+**Note:** The `check` script runs lint and format in CI to reject any push containing style or typing errors.
+> :contentReference[oaicite:4]{index=4}
+
+### 6. Check and fix violations
+```bash
+npm run lint -- --fix
+npm run format
+```
+
+**Note:** These commands automatically apply the corrections suggested by ESLint and Prettier.
+> :contentReference[oaicite:5]{index=5}
+
+### 7. Naming convention verification
+- React components: name each file and folder in PascalCase (e.g., `UserCard.tsx`) :contentReference[oaicite:6]{index=6}
+- Utility files/hooks: name in camelCase (e.g., `dateFormatter.ts`) :contentReference[oaicite:7]{index=7}
+- Ensure that default component exports use the same name as the file.
+
+> :contentReference[oaicite:8]{index=8}
+
+### 8. Configure CI (e.g., GitHub Actions)
+```yaml
+# .github/workflows/lint.yml
+name: Lint & Format
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with: { 'node-version': '18' }
+      - run: npm ci
+      - run: npm run check
+```
+
+**Note:** The CI job fails if ESLint or Prettier detects a problem.
+> :contentReference[oaicite:9]{index=9}

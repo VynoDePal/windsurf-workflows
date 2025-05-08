@@ -1,5 +1,5 @@
 ---
-description: Performs a WCAG audit: checks color contrast, ARIA attributes, semantic structure and keyboard navigation, then proposes remedies for violations.
+description: Performs a WCAG audit. Checks color contrast, ARIA attributes, semantic structure and keyboard navigation, then proposes remedies for violations.
 ---
 
 # Accessibility Audit Workflow

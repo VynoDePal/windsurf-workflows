@@ -2,67 +2,61 @@
 description: Dependency audit and code analysis to detect known vulnerabilities and XSS risks, suggesting security updates or patches.
 ---
 
-steps:
-  - name: "Audit des dépendances"
-    run: |
-      cd <votre-projet>
-      npm audit --json > audit-report.json
-    output: "audit-report.json"
-    description: >
-      Exécute `npm audit --json` (ou `yarn audit --json`) pour générer un rapport détaillé des
-      vulnérabilités connues dans vos dépendances. :contentReference[oaicite:0]{index=0}
+# Security Audit Workflow
 
-  - name: "Application des correctifs automatiques"
-    run: |
-      npm audit fix --force || echo "Certains correctifs nécessitent une intervention manuelle"
-    description: >
-      Tente de corriger automatiquement les vulnérabilités. En cas d’échec, liste les actions manuelles
-      requises (mise à jour majeure ou remplacement de paquet) :contentReference[oaicite:1]{index=1}
+## Steps
 
-  - name: "Inventaire des vulnérabilités non corrigées"
-    run: |
-      jq '.advisories | to_entries[] | {package: .value.module_name, severity: .value.severity, url: .value.url}' audit-report.json
-    description: >
-      Utilise `jq` (ou équivalent) pour extraire l’arborescence des vulnérabilités non corrigées
-      et planifier leur résolution :contentReference[oaicite:2]{index=2}
+### 1. Dependency Audit
+```bash
+cd <your-project>
+npm audit --json > audit-report.json
+```
+> Runs `npm audit --json` (or `yarn audit --json`) to generate a detailed report of known vulnerabilities in your dependencies. :contentReference[oaicite:0]{index=0}
 
-  - name: "Analyse XSS statique"
-    run: |
-      grep -R "innerHTML" src/ || echo "Aucun innerHTML détecté"
-      grep -R "dangerouslySetInnerHTML" src/ || echo "Aucune utilisation de dangerouslySetInnerHTML"
-    description: >
-      Recherche toute assignation directe au DOM via `innerHTML` ou `dangerouslySetInnerHTML`,
-      points d’injection XSS potentiels :contentReference[oaicite:3]{index=3}
+### 2. Apply Automatic Fixes
+```bash
+npm audit fix --force || echo "Some fixes require manual intervention"
+```
+> Attempts to automatically fix vulnerabilities. If unsuccessful, lists the required manual actions (major updates or package replacements) :contentReference[oaicite:1]{index=1}
 
-  - name: "Sanitisation des entrées"
-    run: |
-      # Exemple avec la librairie 'he'
-      npm install he --save
-      # Remplacer dans le code :
-      # element.innerHTML = he.encode(userInput);
-      echo "Vérifier et appliquer l'encodage HTML via he.encode()" 
-    description: >
-      Implémente l’encodage des caractères spéciaux (HTML encoding) pour toute insertion dans le DOM
-      (ex. `he.encode(userInput)`) :contentReference[oaicite:4]{index=4}
+### 3. Inventory of Unfixed Vulnerabilities
+```bash
+jq '.advisories | to_entries[] | {package: .value.module_name, severity: .value.severity, url: .value.url}' audit-report.json
+```
+> Uses `jq` (or equivalent) to extract the tree of unfixed vulnerabilities and plan their resolution :contentReference[oaicite:2]{index=2}
 
-  - name: "Analyse avec ESLint Security Plugin"
-    run: |
-      npm install --save-dev eslint-plugin-security eslint-plugin-security-node
-      npx eslint src/ --rule '{"security/detect-object-injection": "error"}'
-    description: >
-      Exécute ESLint avec `eslint-plugin-security` et `eslint-plugin-security-node` pour repérer
-      les hotspots de sécurité (injections, fonctions dangereuses) :contentReference[oaicite:5]{index=5}
+### 4. Static XSS Analysis
+```bash
+grep -R "innerHTML" src/ || echo "No innerHTML detected"
+grep -R "dangerouslySetInnerHTML" src/ || echo "No dangerouslySetInnerHTML usage detected"
+```
+> Searches for any direct assignments to the DOM via `innerHTML` or `dangerouslySetInnerHTML`, potential XSS injection points :contentReference[oaicite:3]{index=3}
 
-  - name: "Vérification CSP et autres headers"
-    run: |
-      grep -R "Content-Security-Policy" next.config.js || echo "Ajouter les headers via middleware"
-    description: >
-      Vérifie la présence d’en-têtes CSP, HSTS, X-Frame-Options, etc., dans `next.config.js` ou
-      dans votre middleware. Propose des patterns standardisés :contentReference[oaicite:6]{index=6}
+### 5. Input Sanitization
+```bash
+# Example with the 'he' library
+npm install he --save
+# Replace in code:
+# element.innerHTML = he.encode(userInput);
+echo "Verify and apply HTML encoding via he.encode()"
+```
+> Implements encoding of special characters (HTML encoding) for any insertion into the DOM (e.g., `he.encode(userInput)`) :contentReference[oaicite:4]{index=4}
 
-  - name: "Rapport synthétique et recommandations"
-    run: |
-      echo "Génération d’un résumé des vulnérabilités et des actions recommandées"
-    description: >
-      Compile les résultats précédents dans un rapport final (JSON ou Markdown), 
-      listant pour chaque faille la gravité, la localisation et la solution préconisée :contentReference[oaicite:7]{index=7}
+### 6. Analysis with ESLint Security Plugin
+```bash
+npm install --save-dev eslint-plugin-security eslint-plugin-security-node
+npx eslint src/ --rule '{"security/detect-object-injection": "error"}'
+```
+> Runs ESLint with `eslint-plugin-security` and `eslint-plugin-security-node` to identify security hotspots (injections, dangerous functions) :contentReference[oaicite:5]{index=5}
+
+### 7. CSP and Other Headers Verification
+```bash
+grep -R "Content-Security-Policy" next.config.js || echo "Add headers via middleware"
+```
+> Checks for the presence of CSP, HSTS, X-Frame-Options, etc. headers in `next.config.js` or in your middleware. Suggests standardized patterns :contentReference[oaicite:6]{index=6}
+
+### 8. Summary Report and Recommendations
+```bash
+echo "Generating a summary of vulnerabilities and recommended actions"
+```
+> Compiles previous results into a final report (JSON or Markdown), listing for each vulnerability its severity, location, and recommended solution :contentReference[oaicite:7]{index=7}

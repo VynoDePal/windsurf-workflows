@@ -12,6 +12,8 @@ Windsurf Workflows fournit des guides étape par étape pour implémenter les me
 
 - **Bundle Optimization** - Analyse la taille des bundles, identifie les modules les plus lourds et recommande des stratégies de fractionnement pour améliorer les performances de chargement.
 
+- **Image Optimization** - Utilisation de next/image pour le chargement paresseux natif, les placeholders flous et la conversion automatique vers les formats modernes (WebP/AVIF).
+
 ### 🔒 Sécurité
 
 - **Security Audit** - Audit des dépendances et analyse de code pour détecter les vulnérabilités connues et les risques XSS, suggérant des mises à jour ou des correctifs.

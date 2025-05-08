@@ -20,6 +20,8 @@ Windsurf Workflows fournit des guides étape par étape pour implémenter les me
   
 - **Security and Validation** - Audit des dépendances (npm audit), validation des entrées d'API (Zod) et configuration des en-têtes HTTP sécurisés.
 
+- **API Routes Validation** - Mise en place de middlewares de validation avec Zod pour sécuriser les routes API, incluant des messages d'erreur personnalisés et une structure de réponse standardisée.
+
 ### ♿ Accessibilité
 
 - **Accessibility Audit** - Réalise un audit WCAG : vérifie le contraste des couleurs, les attributs ARIA, la structure sémantique et la navigation au clavier, puis propose des solutions pour les violations.

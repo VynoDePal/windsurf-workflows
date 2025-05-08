@@ -1,88 +1,88 @@
 # Windsurf Workflows
 
-Une collection de workflows automatisés pour les développeurs web, conçus pour améliorer la qualité de code, la performance, la sécurité et l'accessibilité des applications web modernes.
+A collection of automated workflows for web developers, designed to improve code quality, performance, security, and accessibility of modern web applications.
 
-## À propos
+## About
 
-Windsurf Workflows fournit des guides étape par étape pour implémenter les meilleures pratiques de développement web dans votre projet. Chaque workflow se concentre sur un aspect spécifique du développement et contient des instructions détaillées, des commandes et des configurations.
+Windsurf Workflows provides step-by-step guides to implement web development best practices in your project. Each workflow focuses on a specific aspect of development and contains detailed instructions, commands, and configurations.
 
-## Workflows disponibles
+## Available Workflows
 
 ### 🚀 Performance
 
-- **Bundle Optimization** - Analyse la taille des bundles, identifie les modules les plus lourds et recommande des stratégies de fractionnement pour améliorer les performances de chargement.
+- **Bundle Optimization** - Analyzes bundle size, identifies the heaviest modules, and recommends splitting strategies to improve loading performance.
 
-- **Image Optimization** - Utilisation de next/image pour le chargement paresseux natif, les placeholders flous et la conversion automatique vers les formats modernes (WebP/AVIF).
+- **Image Optimization** - Using next/image for native lazy loading, blur placeholders, and automatic conversion to modern formats (WebP/AVIF).
 
-### 🔒 Sécurité
+### 🔒 Security
 
-- **Security Audit** - Audit des dépendances et analyse de code pour détecter les vulnérabilités connues et les risques XSS, suggérant des mises à jour ou des correctifs.
+- **Security Audit** - Dependency audit and code analysis to detect known vulnerabilities and XSS risks, suggesting security updates or patches.
   
-- **Security and Validation** - Audit des dépendances (npm audit), validation des entrées d'API (Zod) et configuration des en-têtes HTTP sécurisés.
+- **Security and Validation** - Dependency audit (npm audit), API input validation (Zod), and secure HTTP headers configuration.
 
-- **API Routes Validation** - Mise en place de middlewares de validation avec Zod pour sécuriser les routes API, incluant des messages d'erreur personnalisés et une structure de réponse standardisée.
+- **API Routes Validation** - Implementation of validation middlewares with Zod to secure API routes, including custom error messages and standardized response structure.
 
-### ♿ Accessibilité
+### ♿ Accessibility
 
-- **Accessibility Audit** - Réalise un audit WCAG : vérifie le contraste des couleurs, les attributs ARIA, la structure sémantique et la navigation au clavier, puis propose des solutions pour les violations.
+- **Accessibility Audit** - Performs a WCAG audit: checks color contrast, ARIA attributes, semantic structure, and keyboard navigation, then proposes remedies for violations.
 
 ### 🔍 SEO
 
-- **SEO Optimization** - Vérifie les méta-tags du site (titre, description), la structure HTML sémantique et les performances (temps de chargement) pour optimiser le référencement.
+- **SEO Optimization** - Checks the site's meta tags (title, description), semantic HTML structure, and performance (loading time) to optimize search engine ranking.
 
-### 🌐 Internationalisation
+### 🌐 Internationalization
 
-- **i18n String Extraction** - Détection des textes non traduits et extraction automatique des clés de traduction via i18next-scanner pour faciliter la gestion multilingue.
+- **i18n String Extraction** - Detection of untranslated texts and automatic extraction of translation keys via i18next-scanner to facilitate multilingual management.
 
-### 🧩 Structure du code
+### 🧩 Code Structure
 
-- **Component and Testing Boilerplate** - Automatise la génération de composants React réutilisables, de hooks personnalisés et de tests unitaires pour améliorer la productivité.
+- **Component and Testing Boilerplate** - Automates the generation of reusable React components, custom hooks, and unit tests to boost productivity.
 
-- **Code Quality** - Applique le linting (ESLint), le formatage (Prettier) et le typage strict (TypeScript) pour respecter les conventions de code et réduire les erreurs.
+- **Code Quality** - Applies linting (ESLint), formatting (Prettier), and strict typing (TypeScript) to respect code conventions and reduce errors.
 
-## Comment utiliser ces workflows
+## How to Use These Workflows
 
-1. Naviguez vers le workflow qui vous intéresse
-2. Suivez les étapes documentées
-3. Exécutez les commandes dans votre projet
-4. Appliquez les recommandations fournies
+1. Navigate to the workflow you're interested in
+2. Follow the documented steps
+3. Run the commands in your project
+4. Apply the provided recommendations
 
-## Structure des workflows
+## Workflow Structure
 
-Chaque workflow est structuré avec :
-- Une description concise
-- Des étapes numérotées et détaillées
-- Des commandes à exécuter
-- Des notes d'implémentation
-- Des références aux meilleures pratiques
+Each workflow is structured with:
+- A concise description
+- Numbered and detailed steps
+- Commands to execute
+- Implementation notes
+- References to best practices
 
-## Technologies prises en charge
+## Supported Technologies
 
-Ces workflows sont conçus pour fonctionner avec les technologies suivantes :
+These workflows are designed to work with the following technologies:
 
-### Frameworks et bibliothèques
-- React et Next.js
+### Frameworks and Libraries
+- React and Next.js
 - TypeScript
-- Node.js et npm/yarn
+- Node.js and npm/yarn
 
-### Outils de qualité de code
-- ESLint pour la vérification du code
-- Prettier pour le formatage
-- Jest et React Testing Library pour les tests
+### Code Quality Tools
+- ESLint for code verification
+- Prettier for formatting
+- Jest and React Testing Library for tests
 
-### Analyse et performance
-- Lighthouse et axe-core pour l'audit
-- webpack et ses plugins pour l'optimisation des bundles
-- source-map-explorer pour l'analyse de taille
+### Analysis and Performance
+- Lighthouse and axe-core for auditing
+- webpack and its plugins for bundle optimization
+- source-map-explorer for size analysis
 
-### Sécurité et validation
-- npm audit pour la vérification des dépendances
-- Zod pour la validation des schémas
-- En-têtes HTTP sécurisés
+### Security and Validation
+- npm audit for dependency verification
+- Zod for schema validation
+- Secure HTTP headers
 
 ## Contribution
 
-Pour contribuer à ces workflows :
-1. Créez une branche à partir de `main`
-2. Ajoutez ou modifiez un workflow
-3. Soumettez une pull request avec une description détaillée des changements
+To contribute to these workflows:
+1. Create a branch from `main`
+2. Add or modify a workflow
+3. Submit a pull request with a detailed description of the changes

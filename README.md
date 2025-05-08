@@ -26,6 +26,10 @@ Windsurf Workflows fournit des guides étape par étape pour implémenter les me
 
 - **SEO Optimization** - Vérifie les méta-tags du site (titre, description), la structure HTML sémantique et les performances (temps de chargement) pour optimiser le référencement.
 
+### 🌐 Internationalisation
+
+- **i18n String Extraction** - Détection des textes non traduits et extraction automatique des clés de traduction via i18next-scanner pour faciliter la gestion multilingue.
+
 ### 🧩 Structure du code
 
 - **Component and Testing Boilerplate** - Automatise la génération de composants React réutilisables, de hooks personnalisés et de tests unitaires pour améliorer la productivité.
